@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-		<meta property="og:image" content="eu.png">
+	<meta property="og:image" content="eu.png">
 	<meta name="twitter:image" content="eu.png">
 <title>O meu primeiro site</title>
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
@@ -26,18 +26,31 @@ body {
 	display: block;
 }
 .footer {
-	position: fixed;
-	left: 0;
-	bottom: 0;
-	width: 100vw;
-	text-align: center;
-	background: transparent;
-	color: #111;
-	font-family: 'Roboto', Arial, sans-serif;
-	font-size: 1.2rem;
-	padding: 20px 0 10px 0;
-	letter-spacing: 0.5px;
-	z-index: 10;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100vw;
+    text-align: center;
+    background: transparent;
+    color: #111;
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 2rem;
+    padding: 32px 0 24px 0;
+    letter-spacing: 0.5px;
+    z-index: 10;
+}
+
+@media (max-width: 600px) {
+    .footer {
+        font-size: 3.2vw;
+        padding: 48px 0 32px 0;
+    }
+    #dvd img {
+        width: 120vw;
+        height: auto;
+        max-height: 60vh;
+    }
+}
 }
 </style>
 </head>
@@ -59,11 +72,13 @@ let angle = 0;
 function animate() {
     const w = window.innerWidth;
     const h = window.innerHeight;
+    const footer = document.querySelector('.footer');
+    const footerHeight = footer ? footer.offsetHeight : 0;
     const sizeW = (img.naturalWidth || img.width) * 2;
     const sizeH = (img.naturalHeight || img.height) * 2;
     x += dx;
     y += dy;
-    // Rebater nas margens (efeito DVD clássico)
+    // Rebater nas margens (efeito DVD clássico), evitando o rodapé
     if (x <= 0) {
         x = 0;
         dx *= -1;
@@ -74,8 +89,8 @@ function animate() {
     if (y <= 0) {
         y = 0;
         dy *= -1;
-    } else if (y + sizeH >= h) {
-        y = h - sizeH;
+    } else if (y + sizeH >= h - footerHeight) {
+        y = h - footerHeight - sizeH;
         dy *= -1;
     }
     angle += 0.01 * speed;
